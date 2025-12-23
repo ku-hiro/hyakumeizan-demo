@@ -95,13 +95,16 @@ body{
     radial-gradient(circle at 40px 30px, rgba(255,255,255,.45) 1px, transparent 2px),
     radial-gradient(circle at 70px 15px, rgba(255,255,255,.35) 1px, transparent 2px);
   background-size: 120px 60px;
-  animation: heroFloat 10s linear infinite;
+
+  /* ★ここがポイント：transformじゃなく、背景位置を下に流す */
+  animation: snowFall 3.5s linear infinite;
 }
 
-@keyframes heroFloat{
-  0%   { transform: translateY(-6px); }
-  100% { transform: translateY(6px); }
+@keyframes snowFall{
+  0%   { background-position: 0 0, 0 0, 0 0; }
+  100% { background-position: 0 80px, 0 120px, 0 160px; }
 }
+
 
 /* ========== 季節ごとの雰囲気（色味＋粒の色） ========== */
 .hero.season-winter::before{
@@ -1037,5 +1040,6 @@ window.addEventListener("DOMContentLoaded", function() {
       </div>
 </body>
 </html>
+
 
 
