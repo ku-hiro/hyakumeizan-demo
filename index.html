@@ -84,22 +84,25 @@ body{
 }
 
 /* ====== Hero上にCanvasを重ねる（雪） ====== */
+.hero::before{
+  z-index: 1; /* 背景 */
+}
+
+/* 雪は背景より上、文字より下 */
 #snowCanvas{
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;          /* 背景より上、文字より下にしたい */
+  z-index: 2;
   pointer-events: none;
 }
 
-/* 文字は雪より上 */
+/* 文字は一番上 */
 .hero-inner{
   position: relative;
-  z-index: 2;
+  z-index: 3;
 }
-
-
 
 /* ========== 季節ごとの雰囲気（色味＋粒の色） ========== */
 .hero.season-winter::before{
@@ -127,11 +130,6 @@ body{
     linear-gradient(135deg, #b45309, #0b7a53);
 }
 
-/* 粒の色だけ季節で変える（簡易） */
-.hero.season-spring::after{ opacity: .45; }
-.hero.season-summer::after{ opacity: .35; }
-.hero.season-autumn::after{ opacity: .40; }
-        
 /* ========== テーブル全体 ========== */
 .table{
   width: 100%;
@@ -495,15 +493,16 @@ window.addEventListener("DOMContentLoaded", function() {
 </head>
 
 <body>
+  <div class="box">
     <div class="hero" id="hero">
-  <div class="hero-inner">
-    <h1 class="hero-title">日本百名山</h1>
-    <p class="hero-sub">Demo / 社内共有用</p>
-  </div>
+      <div class="hero-inner">
+        <h1 class="hero-title">日本百名山</h1>
+        <p class="hero-sub">Demo / 社内共有用</p>
+      </div>
 
-  <!-- ★冬だけ雪を降らせるCanvas -->
-  <canvas id="snowCanvas" aria-hidden="true"></canvas>
-</div>
+      <!-- ★冬だけ雪を降らせるCanvas -->
+      <canvas id="snowCanvas" aria-hidden="true"></canvas>
+    </div>
 
         <table class="table" id="myTable">
             <thead>
@@ -1190,6 +1189,7 @@ window.addEventListener("DOMContentLoaded", function() {
       </div>
 </body>
 </html>
+
 
 
 
