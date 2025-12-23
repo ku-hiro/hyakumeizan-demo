@@ -6,7 +6,7 @@
     <title>日本百名山</title>
     <meta name="description" content="'One Hundred Mountains of Japan' was selected by Kyuya Fukada (1903-1971), a writer and climber.He said 'Nowhere in the world do people hold mountains in so much regard as in Japan'.Japanese history since the countrys beginnings, and they manifest themselves in every form of art.For mountains have always formed the bedrock of the Japanese soul.">
 
-    <style>
+<style>
 /* ========== 基本レイアウト ========== */
 :root{
   --bg: #f5f7fb;
@@ -37,6 +37,103 @@ body{
   letter-spacing: .02em;
 }
 
+/* ========== タイトル帯（ヒーロー） ========== */
+.hero{
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,.06);
+  margin: 0 0 12px;
+  background: #fff;
+  position: relative;
+}
+
+/* 中の余白と文字 */
+.hero-inner{
+  padding: 18px 18px 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-title{
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: .04em;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0,0,0,.25);
+}
+
+.hero-sub{
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: rgba(255,255,255,.9);
+}
+
+/* 地紋（パターン）と、ちらちら（簡易アニメ） */
+.hero::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: .95;
+  background:
+    radial-gradient(1200px 220px at 30% 0%, rgba(255,255,255,.35), transparent 60%),
+    radial-gradient(900px 240px at 80% 20%, rgba(255,255,255,.20), transparent 60%),
+    linear-gradient(135deg, #0b7a53, #0a5e43);
+}
+
+/* ちらちら（背景の点を動かす） */
+.hero::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: .55;
+  background-image:
+    radial-gradient(circle at 10px 10px, rgba(255,255,255,.65) 1px, transparent 2px),
+    radial-gradient(circle at 40px 30px, rgba(255,255,255,.45) 1px, transparent 2px),
+    radial-gradient(circle at 70px 15px, rgba(255,255,255,.35) 1px, transparent 2px);
+  background-size: 120px 60px;
+  animation: heroFloat 10s linear infinite;
+}
+
+@keyframes heroFloat{
+  0%   { transform: translateY(-6px); }
+  100% { transform: translateY(6px); }
+}
+
+/* ========== 季節ごとの雰囲気（色味＋粒の色） ========== */
+.hero.season-winter::before{
+  background:
+    radial-gradient(1200px 220px at 30% 0%, rgba(255,255,255,.45), transparent 60%),
+    radial-gradient(900px 240px at 80% 20%, rgba(255,255,255,.25), transparent 60%),
+    linear-gradient(135deg, #1b4f7a, #0b7a53);
+}
+.hero.season-spring::before{
+  background:
+    radial-gradient(1200px 220px at 20% 0%, rgba(255,255,255,.40), transparent 60%),
+    radial-gradient(900px 240px at 80% 20%, rgba(255,192,203,.35), transparent 60%),
+    linear-gradient(135deg, #d946ef, #0b7a53);
+}
+.hero.season-summer::before{
+  background:
+    radial-gradient(1200px 220px at 20% 0%, rgba(255,255,255,.40), transparent 60%),
+    radial-gradient(900px 240px at 80% 20%, rgba(255,255,0,.25), transparent 60%),
+    linear-gradient(135deg, #2563eb, #0b7a53);
+}
+.hero.season-autumn::before{
+  background:
+    radial-gradient(1200px 220px at 20% 0%, rgba(255,255,255,.35), transparent 60%),
+    radial-gradient(900px 240px at 80% 20%, rgba(255,165,0,.28), transparent 60%),
+    linear-gradient(135deg, #b45309, #0b7a53);
+}
+
+/* 粒の色だけ季節で変える（簡易） */
+.hero.season-spring::after{ opacity: .45; }
+.hero.season-summer::after{ opacity: .35; }
+.hero.season-autumn::after{ opacity: .40; }
+        
 /* ========== テーブル全体 ========== */
 .table{
   width: 100%;
@@ -141,8 +238,7 @@ body{
   }
   .thumb{ width: 110px; height: 74px; }
 }
-
-    </style>
+</style>
 
     <script>
         var dir = "asc";
@@ -226,7 +322,20 @@ body{
 
             dir = dir === "asc" ? "desc" : "asc";
         }
-    </script>
+    // ===== 季節クラスを自動で付与（12-2冬 / 3-5春 / 6-8夏 / 9-11秋） =====
+window.addEventListener("DOMContentLoaded", function() {
+  var hero = document.getElementById("hero");
+  if (!hero) return;
+
+  var m = new Date().getMonth() + 1; // 1-12
+  hero.classList.remove("season-winter","season-spring","season-summer","season-autumn");
+
+  if (m === 12 || m === 1 || m === 2) hero.classList.add("season-winter");
+  else if (m >= 3 && m <= 5) hero.classList.add("season-spring");
+  else if (m >= 6 && m <= 8) hero.classList.add("season-summer");
+  else hero.classList.add("season-autumn");
+});
+</script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -235,7 +344,13 @@ body{
 
 <body>
     <div class="box">
-        <h2 class="title">日本百名山</h2>
+        <div class="hero" id="hero">
+  　　　　　<div class="hero-inner">
+    　　　　　　<h1 class="hero-title">日本百名山</h1>
+    　　　　　　<p class="hero-sub">Demo / 社内共有用</p>
+  　　　　</div>
+　　</div>
+
 
         <table class="table" id="myTable">
             <thead>
@@ -922,4 +1037,5 @@ body{
       </div>
 </body>
 </html>
+
 
