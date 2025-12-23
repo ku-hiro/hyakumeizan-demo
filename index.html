@@ -108,6 +108,12 @@ body{
   100% { background-position: 0  40px; }
 }
 
+/* ★冬はCSSの結晶(またはドット)を止めて、JS雪に任せる */
+.hero.season-winter::after{
+  background: none !important;
+  animation: none !important;
+  opacity: 0 !important;
+}
 
 
 /* ========== 季節ごとの雰囲気（色味＋粒の色） ========== */
@@ -343,6 +349,133 @@ window.addEventListener("DOMContentLoaded", function() {
   else hero.classList.add("season-autumn");
 });
 </script>
+<script>
+/* ====== 冬だけ：雪Canvas ====== */
+(function () {
+  function isWinterMonth() {
+    const m = new Date().getMonth() + 1; // 1-12
+    return (m === 12 || m === 1 || m === 2);
+  }
+
+  window.addEventListener("DOMContentLoaded", function () {
+    const hero = document.getElementById("hero");
+    const canvas = document.getElementById("snowCanvas");
+    if (!hero || !canvas) return;
+
+    // 冬以外は何もしない（canvasも隠す）
+    if (!isWinterMonth()) {
+      canvas.style.display = "none";
+      return;
+    }
+
+    const ctx = canvas.getContext("2d");
+    let w = 0, h = 0;
+    let flakes = [];
+    let rafId = null;
+
+    function resize() {
+      const r = hero.getBoundingClientRect();
+      w = Math.max(1, Math.floor(r.width));
+      h = Math.max(1, Math.floor(r.height));
+      canvas.width = w;
+      canvas.height = h;
+    }
+
+    function rand(min, max) { return Math.random() * (max - min) + min; }
+
+    // 小〜中〜やや大を混ぜる（かわいさの肝）
+    function newFlake() {
+      const size = (Math.random() < 0.70) ? rand(1.0, 2.2)
+                 : (Math.random() < 0.90) ? rand(2.2, 3.6)
+                 : rand(3.6, 5.0);
+
+      return {
+        x: rand(0, w),
+        y: rand(-h, 0),
+        r: size,
+        vy: rand(18, 55) / 60,     // 落下速度（小さめ〜中）
+        vx: rand(-10, 10) / 60,    // 横流れ
+        sway: rand(0.6, 2.0),      // 揺れ幅
+        phase: rand(0, Math.PI * 2),
+        rot: rand(0, Math.PI * 2),
+        vrot: rand(-0.02, 0.02),   // 回転は“控えめ”（不快になりにくい）
+        alpha: rand(0.35, 0.85)
+      };
+    }
+
+    function init() {
+      resize();
+      flakes = [];
+      // 量：幅に応じて自動調整（多すぎない上品ライン）
+      const count = Math.min(140, Math.max(50, Math.floor(w / 10)));
+      for (let i = 0; i < count; i++) flakes.push(newFlake());
+    }
+
+    // 雪っぽく「結晶感」をちょい足し：小さな十字＋斜め線（描画コスト軽い）
+    function drawFlake(f) {
+      ctx.save();
+      ctx.globalAlpha = f.alpha;
+      ctx.translate(f.x, f.y);
+      ctx.rotate(f.rot);
+
+      ctx.lineWidth = Math.max(1, f.r / 2.2);
+      ctx.strokeStyle = "rgba(255,255,255,0.85)";
+
+      // 中心の線（+ と ×）
+      ctx.beginPath();
+      ctx.moveTo(-f.r, 0); ctx.lineTo(f.r, 0);
+      ctx.moveTo(0, -f.r); ctx.lineTo(0, f.r);
+      ctx.moveTo(-f.r * 0.7, -f.r * 0.7); ctx.lineTo(f.r * 0.7, f.r * 0.7);
+      ctx.moveTo(-f.r * 0.7, f.r * 0.7); ctx.lineTo(f.r * 0.7, -f.r * 0.7);
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    let t = 0;
+    function tick() {
+      t += 1 / 60;
+      ctx.clearRect(0, 0, w, h);
+
+      for (const f of flakes) {
+        // ランダム感：ふわっと横揺れ（“びくっ”を避けるためsinだけ）
+        f.phase += 0.01;
+        f.x += f.vx + Math.sin(f.phase) * (f.sway / 60);
+        f.y += f.vy;
+        f.rot += f.vrot;
+
+        // 画面外に出たら上に戻す
+        if (f.y > h + 10) {
+          f.y = rand(-30, -5);
+          f.x = rand(0, w);
+        }
+        if (f.x < -10) f.x = w + 10;
+        if (f.x > w + 10) f.x = -10;
+
+        drawFlake(f);
+      }
+
+      rafId = requestAnimationFrame(tick);
+    }
+
+    // 初期化＋開始
+    init();
+    tick();
+
+    // リサイズ対応
+    const ro = new ResizeObserver(() => {
+      init();
+    });
+    ro.observe(hero);
+
+    // ページ離脱時の保険
+    window.addEventListener("beforeunload", () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      ro.disconnect();
+    });
+  });
+})();
+</script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -356,7 +489,17 @@ window.addEventListener("DOMContentLoaded", function() {
     　　　　　　<h1 class="hero-title">日本百名山</h1>
     　　　　　　<p class="hero-sub">Demo / 社内共有用</p>
   　　　　</div>
-　　</div>
+　　<div class="hero" id="hero">
+  　　　<div class="hero-inner">
+    　　　　<h1 class="hero-title">日本百名山</h1>
+    　　　　<p class="hero-sub">Demo / 社内共有用</p>
+ 　　　 </div>
+
+  <!-- ★冬だけ使う雪Canvas（他季節は何もしない） -->
+  <canvas id="snowCanvas" aria-hidden="true"></canvas>
+</div>
+
+        </div>
 
 
         <table class="table" id="myTable">
@@ -1044,6 +1187,7 @@ window.addEventListener("DOMContentLoaded", function() {
       </div>
 </body>
 </html>
+
 
 
 
