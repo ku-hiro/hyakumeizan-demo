@@ -37,7 +37,7 @@ body{
   letter-spacing: .02em;
 }
 
-/* ========== タイトル帯（ヒーロー） ========== */
+/* ========== タイトル帯（.hero） ========== */
 .hero{
   width: 100%;
   border: 1px solid var(--border);
@@ -187,7 +187,7 @@ body{
   background: #eef6f1;
 }
 
-/* ========== 三角印（あなたの設計を維持） ========== */
+/* ========== 三角印 ========== */
 .ascending:after { content: " ▲"; }
 .descending:after { content: " ▼"; }
 
@@ -318,7 +318,8 @@ body{
 
             dir = dir === "asc" ? "desc" : "asc";
         }
-    // ===== 季節クラスを自動で付与（12-2冬 / 3-5春 / 6-8夏 / 9-11秋） =====
+
+// ===== 季節クラスを自動で付与（12-2冬 / 3-5春 / 6-8夏 / 9-11秋） =====
 window.addEventListener("DOMContentLoaded", function() {
   var hero = document.getElementById("hero");
   if (!hero) return;
@@ -1189,6 +1190,7 @@ window.addEventListener("DOMContentLoaded", function() {
       </div>
 </body>
 </html>
+
 
 
 
