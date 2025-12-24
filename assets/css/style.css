@@ -1,0 +1,227 @@
+/* ========== 基本レイアウト ========== */
+:root{
+  --bg: #f5f7fb;
+  --card: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --head: rgb(9, 98, 68);
+  --headText: #ffffff;
+}
+
+body{
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.box{
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+.title{
+  margin: 0 0 12px;
+  font-size: 24px;
+  letter-spacing: .02em;
+}
+
+/* ========== タイトル帯（.hero） ========== */
+.hero{
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,.06);
+  margin: 0 0 12px;
+  background: #fff;
+  position: relative;
+}
+
+/* 中の余白と文字 */
+.hero-inner{
+  padding: 34px 22px 30px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-title{
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: .04em;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0,0,0,.25);
+}
+
+.hero-sub{
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: rgba(255,255,255,.9);
+}
+
+/* 地紋（パターン）と、ちらちら（簡易アニメ） */
+.hero::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: .95;
+  background:
+    radial-gradient(1200px 220px at 30% 0%, rgba(255,255,255,.35), transparent 60%),
+    radial-gradient(900px 240px at 80% 20%, rgba(255,255,255,.20), transparent 60%),
+    linear-gradient(135deg, #0b7a53, #0a5e43);
+}
+
+/* ====== Hero上にCanvasを重ねる（雪） ====== */
+.hero::before{
+  z-index: 1; /* 背景 */
+}
+
+/* 雪は背景より上、文字より下 */
+#snowCanvas{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* 文字は一番上 */
+.hero-inner{
+  position: relative;
+  z-index: 3;
+}
+
+/* ========== 季節ごとの雰囲気（色味＋粒の色） ========== */
+.hero.season-winter::before{
+  background:
+    radial-gradient(1200px 220px at 30% 0%, rgba(255,255,255,.45), transparent 60%),
+    radial-gradient(900px 240px at 80% 20%, rgba(255,255,255,.25), transparent 60%),
+    linear-gradient(135deg, #1b4f7a, #0b7a53);
+}
+.hero.season-spring::before{
+  background:
+    radial-gradient(1200px 220px at 20% 0%, rgba(255,255,255,.40), transparent 60%),
+    radial-gradient(900px 240px at 80% 20%, rgba(255,192,203,.35), transparent 60%),
+    linear-gradient(135deg, #d946ef, #0b7a53);
+}
+.hero.season-summer::before{
+  background:
+    radial-gradient(1200px 220px at 20% 0%, rgba(255,255,255,.40), transparent 60%),
+    radial-gradient(900px 240px at 80% 20%, rgba(255,255,0,.25), transparent 60%),
+    linear-gradient(135deg, #2563eb, #0b7a53);
+}
+.hero.season-winter::before{
+  background:
+    radial-gradient(1200px 220px at 30% 0%, rgba(255,255,255,.55), transparent 60%),
+    radial-gradient(900px 240px at 80% 20%, rgba(225,245,255,.35), transparent 60%),
+    linear-gradient(135deg, #0b3a67, #4fb6e8);
+}
+
+/* ========== テーブル全体 ========== */
+.table{
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,.06);
+}
+
+.table th,
+.table td{
+  border-bottom: 1px solid var(--border);
+  padding: 14px 12px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 14px;
+}
+
+/* 列幅：文字列列は少し広め、画像列は固定気味 */
+.table th:nth-child(1), .table td:nth-child(1){ width: 18%; }
+.table th:nth-child(2), .table td:nth-child(2){ width: 10%; }
+.table th:nth-child(3), .table td:nth-child(3){ width: 12%; }
+.table th:nth-child(4), .table td:nth-child(4),
+.table th:nth-child(5), .table td:nth-child(5),
+.table th:nth-child(6), .table td:nth-child(6){ width: 20%; }
+
+/* ========== ヘッダー ========== */
+.table thead th{
+  position: sticky;   /* スクロールしてもヘッダーが残る */
+  top: 0;
+  z-index: 2;
+  background: var(--head);
+  color: var(--headText);
+  border-bottom: 1px solid rgba(255,255,255,.15);
+}
+
+.sortable{
+  cursor: pointer;
+  user-select: none;
+}
+
+.sortable:hover{
+  filter: brightness(1.06);
+}
+
+/* ========== 行の見やすさ（装飾の肝） ========== */
+.table tbody tr:nth-child(even){
+  background: #fafafa;
+}
+
+.table tbody tr:hover{
+  background: #eef6f1;
+}
+
+/* ========== 三角印 ========== */
+.ascending:after { content: " ▲"; }
+.descending:after { content: " ▼"; }
+
+.sortable-always-arrows::after{
+  content: " ▲▼";
+  font-size: 0.9em;
+  margin-left: 0.2em;
+  opacity: .9;
+}
+
+.sortable-always-arrows.ascending::after,
+.sortable-always-arrows.descending::after{
+  content: "";
+}
+
+/* ========== リンク ========== */
+.link{
+  text-decoration: none;
+  color: #2563eb;
+  font-weight: 600;
+}
+.link:hover{
+  text-decoration: underline;
+}
+
+/* ========== 画像（統一感＋歯抜け対策） ========== */
+.thumb{
+  width: 120px;          /* サムネ幅：少し大きくすると見栄えUP */
+  height: 80px;          /* 高さ固定＝歯抜けしてもレイアウト崩れにくい */
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #f3f4f6;   /* 読み込み中の“台”になる */
+  box-shadow: 0 2px 10px rgba(0,0,0,.08);
+  display: inline-block;
+}
+
+/* スマホでは横スクロールに */
+@media (max-width: 900px){
+  .table{
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .thumb{ width: 110px; height: 74px; }
+}
