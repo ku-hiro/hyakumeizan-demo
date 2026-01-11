@@ -273,7 +273,7 @@
     const img = row.querySelector("img");
     const src = img ? (img.getAttribute("src") || "") : "";
     const m = src.match(/images\/([^\/]+)\//); // "12_立山"
-    if (m && m[1]) mountain_id = m[1].split("_")[0];
+    if (m && m[1]) mountain_id = m[1];
     else mountain_id = mountain_name;
 
     return { mountain_id, mountain_name };
