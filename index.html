@@ -8,6 +8,8 @@
 
     <link rel="stylesheet" href="assets/css/style.css">
 
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js" type="text/javascript"></script>
@@ -2278,18 +2280,57 @@
   </a>
 </td>
 </tr>
-</tbody>
-</table>
-</div>
-<div class="image-container">
-<!-- <img src="path/to/image.jpg" alt="山の写真"> -->
-</div>
+      </tbody>
+    </table>
 
-<script src="assets/js/table.js" defer></script>
-<script src="assets/js/snow.js" defer></script>
+    <!-- ★ここにコメント欄を追加（テーブル直後） -->
+    <section class="comments" id="comments">
+      <div class="comments-head">
+        <h2 class="comments-title">コメント</h2>
+        <div class="comments-current">
+          対象：<span id="currentMountain">（山名をクリックして選択）</span>
+        </div>
+      </div>
+
+      <div class="comments-card">
+        <form id="commentForm" class="comment-form">
+          <div class="comment-row">
+            <input id="commentAuthor" type="text" maxlength="40" placeholder="お名前（任意）" />
+          </div>
+
+          <div class="comment-row">
+            <textarea id="commentBody" maxlength="500" rows="4" placeholder="コメント（500文字まで）" required></textarea>
+          </div>
+
+          <!-- Turnstile（★ここに Site key を入れる） -->
+          <div class="cf-turnstile"
+               data-sitekey="0x4AAAAAACL0fpxlI3KcB-hH"
+               data-callback="onTurnstileSuccess"
+               data-expired-callback="onTurnstileExpired"></div>
+
+          <div class="comment-actions">
+            <button type="submit" id="commentSubmit">投稿する</button>
+            <span class="comment-status" id="commentStatus" aria-live="polite"></span>
+          </div>
+        </form>
+      </div>
+
+      <div class="comments-list" id="commentsList" aria-live="polite"></div>
+    </section>
+  </div>
+
+  <div class="image-container">
+    <!-- <img src="path/to/image.jpg" alt="山の写真"> -->
+  </div>
+
+  <script src="assets/js/table.js" defer></script>
+  <script src="assets/js/snow.js" defer></script>
+  <script src="assets/js/comments.js" defer></script>
 
 </body>
 </html>
+
+
 
 
 
