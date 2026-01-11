@@ -299,3 +299,12 @@ body{
   .search{ max-width: none; }
   .search-meta{ text-align: left; min-width: auto; }
 }
+
+/* ===== 検索：行の見え方を少し気持ちよくする ===== */
+.table tbody tr {
+  transition: background-color 0.18s ease;
+}
+
+.table tbody tr.is-hit {
+  background-color: rgba(255, 255, 255, 0.55);
+}
