@@ -172,8 +172,8 @@
 
   async function submitPost(e) {
     e.preventDefault();
-　　console.log("submit fired");
-
+   const author = document.getElementById("commentAuthor");
+   const body = document.getElementById("commentBody");
    const current = document.getElementById("currentMountain");
    const mountainName = (current?.textContent || "").trim();
    const mountainId = (current?.dataset?.mountainId || mountainName).trim();
