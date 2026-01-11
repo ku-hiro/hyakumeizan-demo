@@ -217,9 +217,7 @@
     // 投稿後、今の表示状態（全体 or 絞り込み）に合わせて再読み込み
     await refreshPostsByCurrentState();
 
-    // tokenは使い捨てなので、再レンダー（簡易にリロード）
-    location.reload();
-  }
+    }
 
   window.addEventListener("DOMContentLoaded", async function () {
     buildMountainOptions();
