@@ -1,8 +1,8 @@
 (function () {
   const TABLE_ID = "myTable";
   const SEARCH_ID = "mountainSearch"; // 既にある検索input
-  const POSTS_WRAP_ID = "postsWrap";
-  const POSTS_META_ID = "postsMeta";
+  const POSTS_WRAP_ID = "commentsList";
+  const POSTS_META_ID = "commentStatus";
   const POST_FORM_ID = "commentForm";
   const MOUNTAIN_SELECT_ID = "postMountain";
   const TURNSTILE_CONTAINER_ID = "turnstileBox";
