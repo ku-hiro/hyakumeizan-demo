@@ -172,6 +172,7 @@
 
   async function submitPost(e) {
     e.preventDefault();
+　　console.log("submit fired");
 
    const current = document.getElementById("currentMountain");
    const mountainName = (current?.textContent || "").trim();
