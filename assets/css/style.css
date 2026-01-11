@@ -308,3 +308,11 @@ body{
 .table tbody tr.is-hit {
   background-color: rgba(255, 255, 255, 0.55);
 }
+
+/* ===== 検索input(type=search)の標準クリア(×)を消す ===== */
+.search-input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+
