@@ -174,9 +174,8 @@
     e.preventDefault();
 
     const select = qs(`#${MOUNTAIN_SELECT_ID}`);
-    const author = qs(`#${POST_FORM_ID} input[name='author']`);
-    const body = qs(`#${POST_FORM_ID} textarea[name='body']`);
-
+    const author = document.getElementById("commentAuthor");
+    const body = document.getElementById("commentBody");
     const mountainId = (select?.value || "").trim();
     const mountainName = (select?.selectedOptions?.[0]?.textContent || "").trim();
 
