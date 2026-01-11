@@ -259,3 +259,53 @@
     if (form) form.addEventListener("submit", submitPost);
   });
 })();
+
+// ===== Mountain selection (click mountain name in table) =====
+(function () {
+  const table = document.getElementById("myTable");
+  const current = document.getElementById("currentMountain");
+  if (!table || !current) return;
+
+  function getMountainFromRow(row) {
+    const mountain_name = (row.cells?.[0]?.innerText || "").trim();
+
+    // 画像srcから "images/12_立山/..." を探して mountain_id を作る（無ければ山名をIDにする）
+    let mountain_id = "";
+    const img = row.querySelector("img");
+    const src = img ? (img.getAttribute("src") || "") : "";
+    const m = src.match(/images\/([^\/]+)\//); // "12_立山"
+    if (m && m[1]) mountain_id = m[1].split("_")[0];
+    else mountain_id = mountain_name;
+
+    return { mountain_id, mountain_name };
+  }
+
+  table.addEventListener("click", async (e) => {
+    const a = e.target.closest("a");
+    if (!a) return;
+
+    const td = a.closest("td");
+    const tr = a.closest("tr");
+    if (!td || !tr) return;
+
+    // 山名列（1列目）だけを対象
+    if (td.cellIndex !== 0) return;
+
+    // Ctrl/Cmd/Shift/中クリックは「リンクとして開く」を優先（=止めない）
+    if (e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1) return;
+
+    // 通常クリックは「山を選択」にする（Wikipediaへ飛ばさない）
+    e.preventDefault();
+
+    const { mountain_id, mountain_name } = getMountainFromRow(tr);
+
+    current.textContent = mountain_name;
+    current.dataset.mountainId = mountain_id;
+    current.dataset.mountainName = mountain_name;
+
+    // 選択したら自動でコメント一覧を読み直す（あなたの実装に合わせて）
+    if (typeof window.loadComments === "function") {
+      await window.loadComments(mountain_id);
+    }
+  });
+})();
