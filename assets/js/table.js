@@ -182,3 +182,56 @@ window.addEventListener("DOMContentLoaded", function() {
     }
   });
 })();
+
+// ===== 検索（山名フィルタ） =====
+window.addEventListener("DOMContentLoaded", function () {
+  const input = document.getElementById("mountainSearch");
+  const clearBtn = document.getElementById("searchClear");
+  const meta = document.getElementById("searchMeta");
+  const table = document.getElementById("myTable");
+  if (!input || !clearBtn || !meta || !table) return;
+
+  const tbody = table.tBodies[0];
+  const rows = Array.from(tbody.rows);
+
+  function update() {
+    const q = (input.value || "").trim().toLowerCase();
+    let shown = 0;
+
+    rows.forEach((tr) => {
+      // 1列目（山名セル）
+      const name = (tr.cells[0]?.textContent || "").trim().toLowerCase();
+
+      const hit = q === "" || name.includes(q);
+
+      tr.style.display = hit ? "" : "none";
+
+      // ★ヒット行だけクラス付与（CSSで薄く強調できる）
+      tr.classList.toggle("is-hit", hit);
+
+      if (hit) shown++;
+    });
+
+    // ★右側の表示
+    if (q === "") {
+      meta.textContent = `ヒット: ${shown}/${rows.length}`;
+    } else if (shown === 0) {
+      meta.textContent = `該当する山はありません（0/${rows.length}）`;
+    } else {
+      meta.textContent = `ヒット: ${shown}/${rows.length}`;
+    }
+  }
+
+  // 入力のたびに更新（Enter不要）
+  input.addEventListener("input", update);
+
+  // クリアボタン
+  clearBtn.addEventListener("click", function () {
+    input.value = "";
+    input.focus();
+    update();
+  });
+
+  // 初期表示
+  update();
+});
