@@ -93,3 +93,92 @@ window.addEventListener("DOMContentLoaded", function() {
   else if (m >= 6 && m <= 8) hero.classList.add("season-summer");
   else hero.classList.add("season-autumn");
 });
+
+// ===== 山名検索（ライブ絞り込み + Enterで先頭へスクロール） =====
+(function () {
+  function norm(s) {
+    return (s || "")
+      .toString()
+      .trim()
+      .toLowerCase();
+  }
+
+  function getRows() {
+    const tbody = document.querySelector("#myTable tbody");
+    if (!tbody) return [];
+    return Array.from(tbody.querySelectorAll("tr"));
+  }
+
+  function applyFilter(q) {
+    const rows = getRows();
+    const query = norm(q);
+
+    let hit = 0;
+    let firstHitRow = null;
+
+    for (const tr of rows) {
+      const nameCell = tr.cells && tr.cells[0] ? tr.cells[0].innerText : "";
+      const nameText = norm(nameCell);
+
+      const ok = !query || nameText.includes(query);
+      tr.style.display = ok ? "" : "none";
+
+      if (ok) {
+        hit++;
+        if (!firstHitRow) firstHitRow = tr;
+      }
+    }
+
+    const meta = document.getElementById("searchMeta");
+    if (meta) {
+      const total = rows.length;
+      meta.textContent = query ? `ヒット: ${hit}/${total}` : `全件: ${rows.length}`;
+    }
+
+    return { hit, firstHitRow };
+  }
+
+  function flashRow(tr) {
+    if (!tr) return;
+    tr.classList.remove("hit-flash");
+    // 付け直しでアニメを確実に発火
+    void tr.offsetWidth;
+    tr.classList.add("hit-flash");
+    setTimeout(() => tr.classList.remove("hit-flash"), 1200);
+  }
+
+  window.addEventListener("DOMContentLoaded", function () {
+    const input = document.getElementById("mountainSearch");
+    const clearBtn = document.getElementById("searchClear");
+    if (!input) return;
+
+    // 初期表示
+    applyFilter("");
+
+    // 入力中はライブ絞り込み（軽いのでデバウンス不要）
+    input.addEventListener("input", function () {
+      applyFilter(input.value);
+    });
+
+    // Enterで「最初のヒットへスクロール＋ハイライト」
+    input.addEventListener("keydown", function (e) {
+      if (e.key !== "Enter") return;
+      const { firstHitRow } = applyFilter(input.value);
+      if (!firstHitRow) return;
+
+      firstHitRow.scrollIntoView({ behavior: "smooth", block: "center" });
+      flashRow(firstHitRow);
+    });
+
+    // クリア
+    if (clearBtn) {
+      clearBtn.addEventListener("click", function () {
+        input.value = "";
+        const { firstHitRow } = applyFilter("");
+        // クリア時はスクロールしない（うるさくなるので）
+        if (firstHitRow) flashRow(firstHitRow); // ここは好みで消してOK
+        input.focus();
+      });
+    }
+  });
+})();
