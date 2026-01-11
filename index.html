@@ -25,7 +25,24 @@
       <canvas id="snowCanvas" aria-hidden="true"></canvas>
     </div>
 
-        <table class="table" id="myTable">
+<!-- ===== 検索バー（テーブルの直前） ===== -->
+<div class="toolbar" aria-label="絞り込み">
+  <div class="search">
+    <span class="search-icon" aria-hidden="true">🔍</span>
+    <input
+      id="mountainSearch"
+      class="search-input"
+      type="search"
+      placeholder="山名で検索（例：富士、岳、白根）"
+      autocomplete="off"
+      spellcheck="false"
+    />
+    <button id="searchClear" class="search-clear" type="button" aria-label="検索をクリア">×</button>
+  </div>
+  <div id="searchMeta" class="search-meta" aria-live="polite"></div>
+</div>
+
+      <table class="table" id="myTable">
             <thead>
                 <tr>
                     <th>山岳名</th>
@@ -2273,6 +2290,7 @@
 
 </body>
 </html>
+
 
 
 
