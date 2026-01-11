@@ -173,13 +173,11 @@
   async function submitPost(e) {
     e.preventDefault();
 
-    const select = qs(`#${MOUNTAIN_SELECT_ID}`);
-    const author = document.getElementById("commentAuthor");
-    const body = document.getElementById("commentBody");
-    const mountainId = (select?.value || "").trim();
-    const mountainName = (select?.selectedOptions?.[0]?.textContent || "").trim();
+   const current = document.getElementById("currentMountain");
+   const mountainName = (current?.textContent || "").trim();
+   const mountainId = (current?.dataset?.mountainId || mountainName).trim();
 
-    if (!mountainId) return alert("山を選択してください");
+    if (!mountainName) return alert("山を選択してください");
     if (!body || !body.value.trim()) return alert("本文を入力してください");
 
     // Turnstile token取得
