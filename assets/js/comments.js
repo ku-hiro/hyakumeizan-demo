@@ -214,6 +214,8 @@
       return;
     }
 
+    flashStatus("投稿しました！");
+    
     body.value = "";
     if (author) author.value = author.value; // そのまま残す（好みで消してOK）
 
@@ -230,8 +232,6 @@
     // 念のため少し遅延でもう一回
     setTimeout(renderTurnstile, 300);
 
-    flashStatus("投稿しました！");
-    
     // 初期表示
     await refreshPostsByCurrentState();
 
