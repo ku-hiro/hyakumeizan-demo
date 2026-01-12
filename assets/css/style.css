@@ -421,3 +421,17 @@ body{
   display: none; /* 空のときは非表示 */
 }
 
+/* ===== comment hint near search ===== */
+.comment-hint {
+  font-size: 0.9em;      /* ヒット数よりほんの少し小さく */
+  opacity: 0.8;          /* 少し薄く */
+  white-space: nowrap;   /* 1行キープ */
+  margin: 0 12px;
+  align-self: center;
+}
+
+/* 画面が狭いときは消す（ダサくなるのを防ぐ） */
+@media (max-width: 820px) {
+  .comment-hint { display: none; }
+}
+
