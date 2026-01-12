@@ -395,3 +395,15 @@ body{
   flex-wrap: wrap;
 }
 
+/* ===== Polish: tag + spacing ===== */
+.post-card {
+  margin-bottom: 16px; /* B: カード間の余白を少し増やす */
+}
+
+.post-tag {
+  display: inline-block;
+  background: #eef3ff;      /* A: タグを少し目立たせる */
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+}
