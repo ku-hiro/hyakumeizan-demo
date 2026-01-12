@@ -172,9 +172,9 @@
 
   async function submitPost(e) {
     e.preventDefault();
-   const statusEl = document.getElementById("commentStatus");
-   const setStatus = (msg) => { if (statusEl) statusEl.textContent = msg; };
-   const flashStatus = (msg, ms = 2000) => { setStatus(msg); setTimeout(() => setStatus(""), ms); };
+   const flashEl = document.getElementById("commentFlash");
+   const setFlash = (msg) => { if (flashEl) flashEl.textContent = msg; };
+   const flash = (msg, ms = 2000) => { setFlash(msg); setTimeout(() => setFlash(""), ms); };
    const author = document.getElementById("commentAuthor");
    const body = document.getElementById("commentBody");
    const current = document.getElementById("currentMountain");
@@ -210,11 +210,11 @@
 
     const data = await res.json();
     if (!data.ok) {
-      flashStatus(`投稿に失敗しました：${data.error || "unknown"}`, 4000);
+      flash(`投稿に失敗しました：${data.error || "unknown"}`, 4000);
       return;
     }
 
-    flashStatus("投稿しました！");
+    flash("投稿しました！");
     
     body.value = "";
     if (author) author.value = author.value; // そのまま残す（好みで消してOK）
