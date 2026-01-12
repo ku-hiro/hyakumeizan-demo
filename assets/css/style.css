@@ -407,3 +407,17 @@ body{
   border-radius: 999px;
   font-size: 12px;
 }
+
+.comment-flash {
+  font-size: 12px;
+  margin-left: 8px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #e9f7ef;
+  color: #1b4332;
+  display: inline-block;
+}
+.comment-flash:empty {
+  display: none; /* 空のときは非表示 */
+}
+
