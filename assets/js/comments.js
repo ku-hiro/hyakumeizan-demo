@@ -172,6 +172,9 @@
 
   async function submitPost(e) {
     e.preventDefault();
+   const statusEl = document.getElementById("commentStatus");
+   const setStatus = (msg) => { if (statusEl) statusEl.textContent = msg; };
+   const flashStatus = (msg, ms = 2000) => { setStatus(msg); setTimeout(() => setStatus(""), ms); };
    const author = document.getElementById("commentAuthor");
    const body = document.getElementById("commentBody");
    const current = document.getElementById("currentMountain");
@@ -207,7 +210,7 @@
 
     const data = await res.json();
     if (!data.ok) {
-      alert(`投稿に失敗しました：${data.error || "unknown"}`);
+      flashStatus(`投稿に失敗しました：${data.error || "unknown"}`, 4000);
       return;
     }
 
@@ -227,6 +230,8 @@
     // 念のため少し遅延でもう一回
     setTimeout(renderTurnstile, 300);
 
+    flashStatus("投稿しました！");
+    
     // 初期表示
     await refreshPostsByCurrentState();
 
