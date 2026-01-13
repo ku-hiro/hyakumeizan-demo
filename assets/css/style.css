@@ -421,25 +421,37 @@ body{
   display: none; /* 空のときは非表示 */
 }
 
-/* ===== comment hint near search ===== */
+/* ===== comment hint near search =====
+  NOTE:
+  baseline / line-height / toolbarのレイアウト影響で、単純な相殺(topとtranslateYの入れ替え)が成立しないことがある。
+  見た目が決まっているこの値を正として固定する。
+  微調整は下のCSS変数だけ触る。
+*/
+:root{
+  --hint-top: -6px;      /* 文字（リンク全体）の上下 */
+  --feather-y: 8px;      /* 羽根だけの上下（ペン先合わせ） */
+  --feather-size: 40px;  /* 羽根サイズ */
+  --hint-gap: 0px;       /* 文字と羽根の距離 */
+}
+
 .comment-hint{
   text-decoration: none;
   color: inherit;
   cursor: pointer;
 
   display: inline-flex;
-  align-items: baseline;     /* ★ 下端（ベースライン）寄せにして揃えやすくする */
-  gap: 0px;                  /* ★ 文字と羽根の距離を「半角スペース感」まで詰める */
+  align-items: baseline;
+  gap: var(--hint-gap);
 
   line-height: 1.2;
   margin-left: -14px;
 
-  font-size: 0.82em;         /* 0.78 → 少し戻す（小さすぎたとのことなので） */
+  font-size: 0.82em;
   opacity: 0.78;
   letter-spacing: 0.02em;
 
   position: relative;
-  top: 0px;
+  top: var(--hint-top);
 }
 
 .comment-hint:hover{
@@ -454,10 +466,9 @@ body{
   border-radius: 999px;
 }
 
-/* 羽根ペン（画像をマスクにして色だけ付ける） */
 .comment-hint-icon.feather{
-  width: 40px;               /* ★ 34 → 42 で「もう一回り」 */
-  height: 40px;
+  width: var(--feather-size);
+  height: var(--feather-size);
   display: inline-block;
 
   background-color: #c7b082;
@@ -465,7 +476,7 @@ body{
   -webkit-mask: url("/assets/img/feather.png") center / contain no-repeat;
           mask: url("/assets/img/feather.png") center / contain no-repeat;
 
-  transform: translateY(2px) rotate(-12deg); /* ★ 2px → -6px でグッと上げる */
+  transform: translateY(var(--feather-y)) rotate(-12deg);
   opacity: 0.95;
 }
 
