@@ -429,7 +429,7 @@ body{
 
   display: inline-flex;
   align-items: baseline;     /* ★ 下端（ベースライン）寄せにして揃えやすくする */
-  gap: 0.1px;                  /* ★ 文字と羽根の距離を「半角スペース感」まで詰める */
+  gap: 0px;                  /* ★ 文字と羽根の距離を「半角スペース感」まで詰める */
 
   line-height: 1.2;
   margin-left: -14px;
