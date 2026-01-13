@@ -310,3 +310,44 @@
     }
   });
 })();
+
+// ===== help popover control =====
+(function(){
+  function qs(id){ return document.getElementById(id); }
+
+  function initHelpPopover(){
+    const btn = qs("helpBtn");
+    const pop = qs("helpPopover");
+    if(!btn || !pop) return;
+
+    function open(){
+      pop.classList.add("is-open");
+      pop.setAttribute("aria-hidden", "false");
+      btn.setAttribute("aria-expanded", "true");
+    }
+    function close(){
+      pop.classList.remove("is-open");
+      pop.setAttribute("aria-hidden", "true");
+      btn.setAttribute("aria-expanded", "false");
+    }
+    function toggle(){
+      const isOpen = pop.classList.contains("is-open");
+      isOpen ? close() : open();
+    }
+
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggle();
+    });
+
+    pop.addEventListener("click", (e) => e.stopPropagation());
+    document.addEventListener("click", close);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") close();
+    });
+  }
+
+  window.addEventListener("DOMContentLoaded", initHelpPopover);
+})();
+
