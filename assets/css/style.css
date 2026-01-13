@@ -451,21 +451,21 @@ body{
   border-radius: 999px;
 }
 
-/* 羽根ペン（塗りつぶし・クリーム/茶） */
-.comment-hint-icon{
-  color: #c7b082;         /* クリーム〜薄い茶（お好みで #b8945a / #d2c39a） */
-  opacity: 0.95;
-  transform: translateY(3px) rotate(-12deg);
-  display: inline-flex;
-  align-items: center;
-}
-
-.hint-feather{
-  width: 28px;            /* 文字より少し存在感 */
+/* 羽根ペン（画像をマスクにして色だけ付ける） */
+.comment-hint-icon.feather{
+  width: 28px;                 /* 文字より大きくてOK */
   height: 28px;
   display: inline-block;
-  fill: currentColor;     /* ← SVGの塗り色が comment-hint-icon のcolorになる */
+
+  background-color: #c7b082;   /* クリーム/茶（好みで調整） */
+
+  -webkit-mask: url("/assets/img/feather.png") center / contain no-repeat;
+          mask: url("/assets/img/feather.png") center / contain no-repeat;
+
+  transform: translateY(5px) rotate(-12deg); /* 下げる＆少し傾ける */
+  opacity: 0.95;
 }
+
 
 /* 画面が狭いときは消す（ダサくなるのを防ぐ） */
 @media (max-width: 820px) {
