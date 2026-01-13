@@ -429,13 +429,14 @@ body{
   display: inline-flex;
   align-items: center;
   gap: 8px;
-
+  line-height: 1.2;  /* 枠の縦幅　1.1〜1.3で調整 */
+  
   font-size: 0.78em;      /* ← だいたい2/3 */
   opacity: 0.78;
   letter-spacing: 0.02em;
 
   position: relative;
-  top: 2px;               /* ほんの少し下げる */
+  top: 6px;               /* ほんの少し下げる */
 }
 
 .comment-hint:hover{
@@ -454,14 +455,14 @@ body{
 .comment-hint-icon{
   color: #c7b082;         /* クリーム〜薄い茶（お好みで #b8945a / #d2c39a） */
   opacity: 0.95;
-  transform: translateY(1px) rotate(-12deg);
+  transform: translateY(3px) rotate(-12deg);
   display: inline-flex;
   align-items: center;
 }
 
 .hint-feather{
-  width: 24px;            /* 文字より少し存在感 */
-  height: 24px;
+  width: 28px;            /* 文字より少し存在感 */
+  height: 28px;
   display: inline-block;
   fill: currentColor;     /* ← SVGの塗り色が comment-hint-icon のcolorになる */
 }
