@@ -44,7 +44,28 @@
   思い出の山に、ひとこと残してみませんか
   <span class="comment-hint-icon feather" aria-hidden="true"></span>
   </a>
-  
+
+  <!-- 使い方ヒント（?） -->
+  <div class="help-wrap">
+    <button
+      type="button"
+      class="help-btn"
+      id="helpBtn"
+      aria-label="使い方"
+      aria-expanded="false"
+      aria-controls="helpPopover"
+    >?</button>
+
+    <div class="help-popover" id="helpPopover" role="dialog" aria-hidden="true">
+      <div class="help-title">使い方</div>
+      <ul class="help-list">
+        <li>山名をクリックすると、その山が選択されます</li>
+        <li>選択した山について、下のコメント欄に思い出を残せます</li>
+        <li>Ctrl（Macは⌘）＋クリックで Wikipedia を開けます</li>
+      </ul>
+    </div>
+  </div>
+    
   <div id="searchMeta" class="search-meta" aria-live="polite"></div>
 </div>
 
@@ -2336,6 +2357,7 @@
 
 </body>
 </html>
+
 
 
 
