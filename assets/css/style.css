@@ -239,6 +239,8 @@ body{
   background: rgba(255,255,255,.85);
   backdrop-filter: blur(6px);
   box-shadow: 0 8px 24px rgba(0,0,0,.06);
+  position: relative;   /* ★ 追加 */
+  z-index: 50;          /* ★ 追加（まずは 50 で十分。ダメなら 200 へ） */
 }
 
 .search{
