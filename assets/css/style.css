@@ -439,7 +439,7 @@ body{
   letter-spacing: 0.02em;
 
   position: relative;
-  top: 0px;
+  top: -5px;
 }
 
 .comment-hint:hover{
