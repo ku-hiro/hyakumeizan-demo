@@ -429,7 +429,7 @@ body{
 
   display: inline-flex;
   align-items: baseline;     /* ★ 下端（ベースライン）寄せにして揃えやすくする */
-  gap: 2px;                  /* ★ 文字と羽根の距離を「半角スペース感」まで詰める */
+  gap: 1px;                  /* ★ 文字と羽根の距離を「半角スペース感」まで詰める */
 
   line-height: 1.2;
   margin-left: -14px;
@@ -465,7 +465,7 @@ body{
   -webkit-mask: url("/assets/img/feather.png") center / contain no-repeat;
           mask: url("/assets/img/feather.png") center / contain no-repeat;
 
-  transform: translateY(5px) rotate(-12deg); /* ★ 2px → -6px でグッと上げる */
+  transform: translateY(8px) rotate(-12deg); /* ★ 2px → -6px でグッと上げる */
   opacity: 0.95;
 }
 
