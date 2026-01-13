@@ -439,7 +439,7 @@ body{
   letter-spacing: 0.02em;
 
   position: relative;
-  top: -6px;
+  top: 0px;
 }
 
 .comment-hint:hover{
@@ -465,7 +465,7 @@ body{
   -webkit-mask: url("/assets/img/feather.png") center / contain no-repeat;
           mask: url("/assets/img/feather.png") center / contain no-repeat;
 
-  transform: translateY(8px) rotate(-12deg); /* ★ 2px → -6px でグッと上げる */
+  transform: translateY(2px) rotate(-12deg); /* ★ 2px → -6px でグッと上げる */
   opacity: 0.95;
 }
 
