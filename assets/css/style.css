@@ -481,7 +481,17 @@ body{
   opacity: 0.95;
 }
 
-/* 画面が狭いときは消す（ダサくなるのを防ぐ） */
+/* モバイル表示用 */
 @media (max-width: 820px) {
-  .comment-hint { display: none; }
+  .comment-hint{
+    display: inline-flex;     /* 消さない */
+    margin-left: 0;           /* 変な食い込みを防ぐ */
+    font-size: 0.78em;        /* 少し控えめ */
+    opacity: 0.72;
+  }
+  .comment-hint-icon.feather{
+    width: 32px;
+    height: 32px;
+  }
 }
+
