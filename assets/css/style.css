@@ -432,6 +432,7 @@ body{
   --feather-y: 10px;      /* 羽根だけの上下（ペン先合わせ） -で上がる　+で下がる */
   --feather-size: 40px;  /* 羽根サイズ */
   --hint-gap: 0px;       /* 文字と羽根の距離 */
+  --hint-left: -22px;   /* 検索窓と文字の横距離（-で左へ、+で右へ） */
 }
 
 .comment-hint{
@@ -444,7 +445,7 @@ body{
   gap: var(--hint-gap);
 
   line-height: 1.2;
-  margin-left: -14px;
+  margin-left: var(--hint-left);
 
   font-size: 0.82em;
   opacity: 0.78;
