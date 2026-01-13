@@ -428,8 +428,9 @@ body{
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
   line-height: 1.2;  /* 枠の縦幅　1.1〜1.3で調整 */
+  margin-left: -14px; /* ← まずは -10〜-24 で調整 */
   
   font-size: 0.78em;      /* ← だいたい2/3 */
   opacity: 0.78;
@@ -453,8 +454,8 @@ body{
 
 /* 羽根ペン（画像をマスクにして色だけ付ける） */
 .comment-hint-icon.feather{
-  width: 28px;                 /* 文字より大きくてOK */
-  height: 28px;
+  width: 34px;                 /* 文字より大きくてOK */
+  height: 34px;
   display: inline-block;
 
   background-color: #c7b082;   /* クリーム/茶（好みで調整） */
@@ -462,7 +463,7 @@ body{
   -webkit-mask: url("/assets/img/feather.png") center / contain no-repeat;
           mask: url("/assets/img/feather.png") center / contain no-repeat;
 
-  transform: translateY(5px) rotate(-12deg); /* 下げる＆少し傾ける */
+  transform: translateY(2px) rotate(-12deg); /* 下げる＆少し傾ける */
   opacity: 0.95;
 }
 
