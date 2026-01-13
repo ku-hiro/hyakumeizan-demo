@@ -429,7 +429,7 @@ body{
 
   display: inline-flex;
   align-items: baseline;     /* ★ 下端（ベースライン）寄せにして揃えやすくする */
-  gap: 1px;                  /* ★ 文字と羽根の距離を「半角スペース感」まで詰める */
+  gap: 0.1px;                  /* ★ 文字と羽根の距離を「半角スペース感」まで詰める */
 
   line-height: 1.2;
   margin-left: -14px;
@@ -456,8 +456,8 @@ body{
 
 /* 羽根ペン（画像をマスクにして色だけ付ける） */
 .comment-hint-icon.feather{
-  width: 42px;               /* ★ 34 → 42 で「もう一回り」 */
-  height: 42px;
+  width: 40px;               /* ★ 34 → 42 で「もう一回り」 */
+  height: 40px;
   display: inline-block;
 
   background-color: #c7b082;
