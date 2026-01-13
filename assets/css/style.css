@@ -426,22 +426,24 @@ body{
   text-decoration: none;
   color: inherit;
   cursor: pointer;
+
   display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  line-height: 1.2;  /* 枠の縦幅　1.1〜1.3で調整 */
-  margin-left: -14px; /* ← まずは -10〜-24 で調整 */
-  
-  font-size: 0.78em;      /* ← だいたい2/3 */
+  align-items: baseline;     /* ★ 下端（ベースライン）寄せにして揃えやすくする */
+  gap: 2px;                  /* ★ 文字と羽根の距離を「半角スペース感」まで詰める */
+
+  line-height: 1.2;
+  margin-left: -14px;
+
+  font-size: 0.82em;         /* 0.78 → 少し戻す（小さすぎたとのことなので） */
   opacity: 0.78;
   letter-spacing: 0.02em;
 
   position: relative;
-  top: 6px;               /* ほんの少し下げる */
+  top: 6px;
 }
 
 .comment-hint:hover{
-  opacity: 0.92;          /* 反応は控えめ */
+  opacity: 0.92;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -454,23 +456,20 @@ body{
 
 /* 羽根ペン（画像をマスクにして色だけ付ける） */
 .comment-hint-icon.feather{
-  width: 34px;                 /* 文字より大きくてOK */
-  height: 34px;
+  width: 42px;               /* ★ 34 → 42 で「もう一回り」 */
+  height: 42px;
   display: inline-block;
 
-  background-color: #c7b082;   /* クリーム/茶（好みで調整） */
+  background-color: #c7b082;
 
   -webkit-mask: url("/assets/img/feather.png") center / contain no-repeat;
           mask: url("/assets/img/feather.png") center / contain no-repeat;
 
-  transform: translateY(2px) rotate(-12deg); /* 下げる＆少し傾ける */
+  transform: translateY(-6px) rotate(-12deg); /* ★ 2px → -6px でグッと上げる */
   opacity: 0.95;
 }
-
 
 /* 画面が狭いときは消す（ダサくなるのを防ぐ） */
 @media (max-width: 820px) {
   .comment-hint { display: none; }
 }
-
-
